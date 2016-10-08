@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  caddy-proxy:
+    build: .
+    image: scortum/caddy-proxy
+    container_name: caddy-proxy
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+     
