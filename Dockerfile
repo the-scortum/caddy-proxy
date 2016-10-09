@@ -25,9 +25,9 @@ RUN wget https://github.com/jwilder/docker-gen/releases/download/$DOCKER_GEN_VER
 
 VOLUME ["/certs"]
 
-COPY container-content/entry.sh /
-COPY container-content/Procfile /
-COPY container-content/Caddyfile.template /
+ADD container-content/entry.sh /
+ADD container-content/Procfile /
+ADD container-content/Caddyfile.template /
 
 ENTRYPOINT ["/entry.sh"]
 CMD ["forego", "start", "-r"]
