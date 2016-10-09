@@ -1,14 +1,28 @@
-http://caddyserver.com, https://caddyserver.com {
-    tls  "caddy bundle.crt" caddy.key
-    root /www/caddyserver.com
+ 
+domain.tld, domain2.tld {
+
+    proxy / localhost:8000 {
+        proxy_header Host {host}
+        proxy_header X-Forwarded-Proto {scheme}
+
+        except /media /static
+    }
+
+    root /var/www
+
     ext  .html .md
+
     gzip
+
+
+    # Logging access and errors
+    log access.log
+
     errors {
         log error.log
         404 404.html
     }
+
     templates
-    proxy /download/build localhost:5050
-    proxy /features.json  localhost:5050
 }
 
