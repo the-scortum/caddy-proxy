@@ -1,0 +1,12 @@
+{{ range $host, $containers := groupBy $ "Env.VIRTUAL_HOST" }}
+
+  {{ $host }} 
+
+  {{ range $index, $value := $containers }}
+      {{ with $address := index $value.Addresses 0 }}
+          {{ $value.Gateway }}:{{ $address.HostPort }};
+      {{ end }}
+  {{ end }}
+
+{{ end }}
+

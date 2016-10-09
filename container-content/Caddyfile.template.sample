@@ -1,21 +1,23 @@
  
 domain.tld, domain2.tld {
 
+    ## Proxy - https://caddyserver.com/docs/proxy
     proxy / localhost:8000 {
-        proxy_header Host {host}
-        proxy_header X-Forwarded-Proto {scheme}
-
+        transparent
         except /media /static
     }
 
+
     root /var/www
-
     ext  .html .md
-
     gzip
 
 
-    # Logging access and errors
+    ## Templating - https://caddyserver.com/docs/templates
+    # templates
+
+
+    ## Logging access and errors
     log access.log
 
     errors {
@@ -23,6 +25,5 @@ domain.tld, domain2.tld {
         404 404.html
     }
 
-    templates
 }
 

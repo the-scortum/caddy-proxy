@@ -1,0 +1,2 @@
+caddy:  caddy -quic
+dockergen: docker-gen -watch -notify "nginx -s reload" /Caddyfile.template /Caddyfile
