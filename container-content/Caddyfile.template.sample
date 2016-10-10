@@ -18,10 +18,9 @@ domain.tld, domain2.tld {
 
 
     ## Logging access and errors
-    log access.log
-
+    log stdout
     errors {
-        log error.log
+        log stdout
         404 404.html
     }
 
