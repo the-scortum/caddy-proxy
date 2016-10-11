@@ -7,4 +7,11 @@ services:
     container_name: caddy-proxy
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-     
+      - "./certs:/etc/caddy/certs"
+      - "./logs:/var/log/www"
+      - "./docroot:/var/www"
+    ports:
+      - "8080:80"
+      - "4443:443"
+      - "2015:2015"
+

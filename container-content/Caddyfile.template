@@ -1,6 +1,44 @@
+ 
+0.0.0.0:80 {
+    root /var/www
+    ext  .html .md
+    gzip
+
+    ## Logging access and errors
+    log stdout
+    errors {
+        log stdout
+        404 404.html
+    }
+}
+
 {{ range $host, $containers := groupBy $ "Env.VIRTUAL_HOST" }}
 
-  {{ $host }} 
+  {{ $host }} {
+    ## Proxy - https://caddyserver.com/docs/proxy
+    proxy / localhost:8000 {
+        transparent
+        except /media /static
+    }
+
+
+    root /var/www
+    ext  .html .md
+    gzip
+
+
+    ## Templating - https://caddyserver.com/docs/templates
+    # templates
+
+
+    ## Logging access and errors
+    log stdout
+    errors {
+        log stdout
+        404 404.html
+    }
+
+  }
 
   {{ range $index, $value := $containers }}
       {{ with $address := index $value.Addresses 0 }}
@@ -9,4 +47,6 @@
   {{ end }}
 
 {{ end }}
+
+
 

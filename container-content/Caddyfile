@@ -1,6 +1,19 @@
  
-domain.tld, domain2.tld {
+0.0.0.0:80 {
+    root /var/www
+    ext  .html .md
+    gzip
 
+    ## Logging access and errors
+    log stdout
+    errors {
+        log stdout
+        404 404.html
+    }
+}
+
+
+domain.tld, domain2.tld {
     ## Proxy - https://caddyserver.com/docs/proxy
     proxy / localhost:8000 {
         transparent

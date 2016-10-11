@@ -33,15 +33,22 @@ RUN curl --silent --show-error --fail --location \
  && chmod 0755 /usr/bin/caddy \  
  && /usr/bin/caddy -version
 
+RUN mkdir -p /etc/caddy \
+ && mkdir -p /var/log/www \
+ && mkdir -p /var/www \
+ && mkdir -p /etc/caddy/certs
 
+ENV CADDYPATH /etc/caddy/certs
 
-VOLUME ["/certs"]
+VOLUME ["/var/log/www", "/var/www", "/etc/caddy/certs"]
 
-ADD container-content/entry.sh /
-ADD container-content/Procfile /
-ADD container-content/Caddyfile.template /
+ADD container-content/entry.sh             /
+ADD container-content/Procfile             /etc
+ADD container-content/Caddyfile            /etc/caddy
+ADD container-content/Caddyfile.template   /etc/caddy
+ADD container-content/index.html           /var/www
 
 EXPOSE 80 443 2015
 
 ENTRYPOINT ["/entry.sh"]
-CMD ["forego", "start", "-r"]
+CMD ["forego", "start", "-r", "-f", "/etc/Procfile"]
