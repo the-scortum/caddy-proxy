@@ -4,16 +4,20 @@ services:
     build: .
     image: scortum/caddy-proxy
     container_name: caddy-proxy
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./certs:/etc/caddy/certs"
+      - "./logs:/var/log/www"
     ports:
       - "80:80"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - "443:443"
+      - "2015:2015"
 
-  hello-world:
-    image: tutum/hello-world
-    container_name: hello-world
-    environment:
-      - VIRTUAL_HOST=helloworld.local
+#  hello-world:
+#    image: tutum/hello-world
+#    container_name: hello-world
+#    environment:
+#      - VIRTUAL_HOST=helloworld.local
 
   whoami:
     image: jwilder/whoami

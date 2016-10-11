@@ -40,11 +40,10 @@ RUN mkdir -p /etc/caddy \
 
 ENV CADDYPATH /etc/caddy/certs
 
-VOLUME ["/var/log/www", "/var/www", "/etc/caddy/certs"]
+VOLUME ["/var/log/www", "/etc/caddy/certs"]
 
 ADD container-content/entry.sh             /
 ADD container-content/Procfile             /etc
-ADD container-content/Caddyfile            /etc/caddy
 ADD container-content/Caddyfile.template   /etc/caddy
 ADD container-content/index.html           /var/www
 
