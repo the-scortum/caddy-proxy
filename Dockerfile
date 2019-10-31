@@ -1,5 +1,6 @@
-FROM ubuntu:latest
-MAINTAINER Alex
+FROM apky/ubik AS apky-ubik
+
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -42,12 +43,15 @@ ENV CADDYPATH /etc/caddy/certs
 
 VOLUME ["/var/log/www", "/etc/caddy/certs"]
 
-ADD container-content/entry.sh             /
+ADD container-content/entrypoint.sh        /
+ADD container-content/run.sh               /
 ADD container-content/Procfile             /etc
 ADD container-content/Caddyfile.template   /etc/caddy
 ADD container-content/index.html           /var/www
 
+COPY --from=apky-ubik /app/ubik /root/
+
 EXPOSE 80 443 2015
 
-ENTRYPOINT ["/entry.sh"]
-CMD ["forego", "start", "-r", "-f", "/etc/Procfile"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/run.sh"]
