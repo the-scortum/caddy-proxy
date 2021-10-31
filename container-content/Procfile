@@ -1,2 +1,0 @@
-dockergen: docker-gen -watch -notify "cat /etc/Caddyfile && killall -SIGUSR1 caddy" /etc/caddy/Caddyfile.template /etc/caddy/Caddyfile
-caddy:  sleep 10; cat /etc/caddy/Caddyfile; caddy -quic -conf /etc/caddy/Caddyfile
